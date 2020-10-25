@@ -12,7 +12,7 @@
 
 ## 螢幕截圖 Screenshot
 
-<img src = "https://raw.githubusercontent.com/Loukei/portfolio/master/GDriveApp/Demo_Image/Demo_mainwindow(Login).png" width="400" height="300" />
+<img src = "https://github.com/Loukei/GDriveApp/blob/main/Demo_Image/Demo_mainwindow(Login).png?raw=true" width="400" height="300" />
 
 ## 功能 Features
 
@@ -20,19 +20,19 @@
 
 - 取得使用者名稱與email
 
-<img src = "https://raw.githubusercontent.com/Loukei/portfolio/master/GDriveApp/Demo_Image/Demo_Login.gif" width="400" height="300" />
+<img src = "https://github.com/Loukei/GDriveApp/blob/main/Demo_Image/Demo_Login.gif?raw=true" width="400" height="300" />
 
 - 上傳檔案
 
-<img src = "https://raw.githubusercontent.com/Loukei/portfolio/master/GDriveApp/Demo_Image/Demo_UploadFile.gif" width="400" height="300" />
+<img src = "https://github.com/Loukei/GDriveApp/blob/main/Demo_Image/Demo_UploadFile.gif?raw=true" width="400" height="300" />
 
 - 下載檔案，需要輸入fileID
 
-<img src = "https://raw.githubusercontent.com/Loukei/portfolio/master/GDriveApp/Demo_Image/Demo_DownloadFile.gif" width="400" height="300" />
+<img src = "https://github.com/Loukei/GDriveApp/blob/main/Demo_Image/Demo_DownloadFile.gif?raw=true" width="400" height="300" />
 
 - 搜尋，取得檔案fileID
 
-<img src = "https://raw.githubusercontent.com/Loukei/portfolio/master/GDriveApp/Demo_Image/Demo_SearchFile.gif" width="400" height="300" />
+<img src = "https://github.com/Loukei/GDriveApp/blob/main/Demo_Image/Demo_SearchFile.gif?raw=true" width="400" height="300" />
 
 ## 安裝環境
 
