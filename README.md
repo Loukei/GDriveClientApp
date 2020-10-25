@@ -49,6 +49,12 @@ client_id           | keyClientId()         | 提供google辨識請求App
 client_secret       | keyClientSecert()     | 
 redirect_uris       | keyRedirectUri()      | 網頁重新導向的路徑位址
 
+5. 這個專案在`mainwindow.cpp`建立一個`oauthglobal.h`檔案，必須自行建立內容
+
+``` c++
+#include "Secret/oauthglobal.h" /* Oauth parameter */
+```
+
 ## 如何使用GDriveLib How to Use library
 
 ### 範例 Example
@@ -301,7 +307,7 @@ m_Drive->refreshAccessToken(); // use refresh token to login
 
 [Google Api Console]: https://console.developers.google.com/apis
 
-[oauthglobal.h]: https://github.com/Loukei/portfolio/blob/master/GDriveApp/oauthglobal.h
+[oauthglobal.h]: https://github.com/Loukei/GDriveApp/blob/main/src/Secret/oauthglobal_copy.h
 
 [QOAuth2AuthorizationCodeFlow]: https://doc.qt.io/qt-5/qoauth2authorizationcodeflow.html
 
