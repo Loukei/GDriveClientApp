@@ -54,12 +54,19 @@ MainWindow::MainWindow(QWidget *parent) :
     m_model = new QJsonModel(this);
     ui->treeView_Reply->setModel(m_model);
     // Create Google Drive Serviece instance
-    m_Drive = new GDriveService(OAuth::keyAuthUri(),
-                                OAuth::keyTokenUri(),
-                                OAuth::keyClientId(),
-                                OAuth::keyClientSecert(),
-                                OAuth::keyScope(),
-                                OAuth::keyRedirectPort(),
+//    m_Drive = new GDriveService(OAuth::keyAuthUri(),
+//                                OAuth::keyTokenUri(),
+//                                OAuth::keyClientId(),
+//                                OAuth::keyClientSecert(),
+//                                OAuth::keyScope(),
+//                                OAuth::keyRedirectPort(),
+//                                this);
+    m_Drive = new GDriveService(Settings::OAuth_AuthUri(m_settings),
+                                Settings::OAuth_TokenUri(m_settings),
+                                Settings::OAuth_ClientId(m_settings),
+                                Settings::OAuth_ClientSecert(m_settings),
+                                Settings::OAuth_Scope(m_settings),
+                                Settings::OAuth_RedirectPort(m_settings),
                                 this);
     loadUserAccount(*m_settings);
     connect(m_Drive,&GDriveService::granted,
@@ -380,14 +387,24 @@ void MainWindow::writeSettings()
     m_settings->setValue(Settings::key_FileGet_Fields,m_dialogFileMataData->getFields());
     m_settings->setValue(Settings::key_Update_FilePath,m_dialogUpdate->getFilePath());
     m_settings->setValue(Settings::key_Update_FileID,m_dialogUpdate->getFileID());
+    if(!m_settings->contains("OAuth"))
+    {
+        m_settings->setValue(Settings::key_OAuth_ClientId,"CLIENTID");
+        m_settings->setValue(Settings::key_OAuth_ClientSecert,"CLIENTSECRET");
+        m_settings->setValue(Settings::key_OAuth_RedirectUri,"http://localhost:8080");
+        m_settings->setValue(Settings::key_OAuth_RedirectPort,"8080");
+        m_settings->setValue(Settings::key_OAuth_Scope,"https://www.googleapis.com/auth/drive.file");
+        m_settings->setValue(Settings::key_OAuth_AuthUri,"https://accounts.google.com/o/oauth2/auth");
+        m_settings->setValue(Settings::key_OAuth_TokenUri,"https://oauth2.googleapis.com/token");
+    }
     if(ui->action_Remember_me->isChecked()){
-        m_settings->setValue(Settings::key_OAuth_UserEmail,m_accountActs->emailAddress());
+        m_settings->setValue(Settings::key_Account_Email,m_accountActs->emailAddress());
         SimpleCrypt crypto(m_ecryptKey);
-        m_settings->setValue(Settings::key_OAuth_RefreshToken,
+        m_settings->setValue(Settings::key_Account_RefreshToken,
                              crypto.encryptToString(m_Drive->refreshToken()));
     }else {
-        m_settings->remove(Settings::key_OAuth_UserEmail);
-        m_settings->remove(Settings::key_OAuth_RefreshToken);
+        m_settings->remove(Settings::key_Account_Email);
+        m_settings->remove(Settings::key_Account_RefreshToken);
     }
 }
 
@@ -395,7 +412,7 @@ void MainWindow::loadUserAccount(const QSettings &settings)
 {
     qDebug() << Q_FUNC_INFO; // "Status: NotAuthenticated"
     SimpleCrypt crypto(m_ecryptKey);
-    const QString refreshToken = crypto.decryptToString(Settings::OAuth_RefreshToken(&settings));
+    const QString refreshToken = crypto.decryptToString(Settings::Account_RefreshToken(&settings));
     if(!refreshToken.isEmpty())
     {
         m_Drive->setRefreshToken(refreshToken);
