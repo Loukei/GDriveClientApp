@@ -105,3 +105,6 @@ RESOURCES += \
     resources.qrc
 
 DISTFILES +=
+
+## add windows desktop icon
+RC_ICONS = C:\Users\weber\OneDrive\Projects\Portfolio\GDriveApp\src\Icon\DeskIcon.ico
