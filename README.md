@@ -34,26 +34,26 @@
 
 <img src = "https://github.com/Loukei/GDriveApp/blob/main/Demo_Image/Demo_SearchFile.gif?raw=true" width="400" height="300" />
 
-## 安裝環境
+## 使用應用程式
 
-1. 安裝Qt5.13或更高版本
-2. 確保Qt的網路模組可順利執行，安裝[Qt WebEngine][]與[Qt NetWork Authorization][]模組
-3. 要開發Google OAuth 2 App，您應該[向google申請自己的一組App][Enable the Drive API]，並在[Google Api Console][]下載Client_secret.json
-4. 將`src/GDriveLib`資料夾加入你的專案
+1. 要開發Google OAuth 2 App，您應該[向google申請自己的一組App][Enable the Drive API]，並在[Google Api Console][]下載**Client_secret.json**
+2. [下載]()並執行**GDrive.exe**
 
-[可選] 要使用OAuth，必須提供Client_secret.json中的參數，請將參數填入[oauthglobal.h][]，用來初始化
+- 初次使用無法登入Google，因為您還沒有配置設定檔
+- 關閉程式，會看到**GDriveApp_Settings.ini**檔
+- 開啟**GDriveApp_Settings.ini**，編輯OAuth欄位底下的內容，依照您自己的API設定填入前三項ClientId、ClientSecert、RedirectUri
 
-參數名稱(.json)     | 對應函數(.h)          | 說明
---------------------|:---------------------:|:---------------------
-client_id           | keyClientId()         | 提供google辨識請求App
-client_secret       | keyClientSecert()     | 
-redirect_uris       | keyRedirectUri()      | 網頁重新導向的路徑位址
-
-5. 這個專案在`mainwindow.cpp`建立一個`oauthglobal.h`檔案，必須自行建立內容
-
-``` c++
-#include "Secret/oauthglobal.h" /* Oauth parameter */
+``` txt
+[OAuth]
+ClientId=CLIENTID
+ClientSecert=CLIENTSECRET
+RedirectUri=http://localhost:8080/cb
+Scope=https://www.googleapis.com/auth/drive.file
+AuthUri=https://accounts.google.com/o/oauth2/auth
+TokenUri=https://oauth2.googleapis.com/token
 ```
+
+- 重新開啟**GDrive.exe**並登入即可
 
 ## 如何使用GDriveLib How to Use library
 
@@ -68,14 +68,13 @@ redirect_uris       | keyRedirectUri()      | 網頁重新導向的路徑位址
 ExampleDialog::ExampleDialog(QWidget *parent)
     : QDialog(parent),m_currentOAuthToken(QString())
 {
-    m_Drive = new GDriveService(
-        OAuth::keyAuthUri(),
-        OAuth::keyTokenUri(),
-        OAuth::keyClientId(),
-        OAuth::keyClientSecert(),
-        OAuth::keyScope(),
-        OAuth::keyRedirectPort(),
-        this);
+    m_Drive = new GDriveService(Settings::OAuth_AuthUri(m_settings),
+                                Settings::OAuth_TokenUri(m_settings),
+                                Settings::OAuth_ClientId(m_settings),
+                                Settings::OAuth_ClientSecert(m_settings),
+                                Settings::OAuth_Scope(m_settings),
+                                Settings::OAuth_RedirectPort(m_settings),
+                                this);
     connect(m_Drive,&GDriveService::granted,
             this,&ExampleDialog::onGDrive_granted);
     connect(m_Drive,&GDriveService::error,
@@ -274,8 +273,8 @@ m_Drive->refreshAccessToken(); // use refresh token to login
 ## 編譯環境 My compile environment
 
 - C++ ver: C++ 11
-- Qt kits: Qt5.13.2 MinGW 32bit
-- OS: win7 32bit
+- Qt kits: Qt5.13.2 MinGW 64bit
+- OS: win10 64bit
 
 ## Credit
 
