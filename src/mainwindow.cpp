@@ -9,7 +9,6 @@
 #include "updatedialog.h"
 #include "networkprogressdialog.h" /* open dialog to show download/upload progress */
 
-#include "Secret/oauthglobal.h" /* Oauth parameter */
 #include "GDriveLib/googledriveservice.h"
 #include "QJsonModel/qjsonmodel.h"
 #include "mainwindow_settings.h" /* namespace Settings */
@@ -54,13 +53,6 @@ MainWindow::MainWindow(QWidget *parent) :
     m_model = new QJsonModel(this);
     ui->treeView_Reply->setModel(m_model);
     // Create Google Drive Serviece instance
-//    m_Drive = new GDriveService(OAuth::keyAuthUri(),
-//                                OAuth::keyTokenUri(),
-//                                OAuth::keyClientId(),
-//                                OAuth::keyClientSecert(),
-//                                OAuth::keyScope(),
-//                                OAuth::keyRedirectPort(),
-//                                this);
     m_Drive = new GDriveService(Settings::OAuth_AuthUri(m_settings),
                                 Settings::OAuth_TokenUri(m_settings),
                                 Settings::OAuth_ClientId(m_settings),
@@ -387,12 +379,12 @@ void MainWindow::writeSettings()
     m_settings->setValue(Settings::key_FileGet_Fields,m_dialogFileMataData->getFields());
     m_settings->setValue(Settings::key_Update_FilePath,m_dialogUpdate->getFilePath());
     m_settings->setValue(Settings::key_Update_FileID,m_dialogUpdate->getFileID());
-    if(!m_settings->contains("OAuth"))
+    // write OAuth default Setting when ini file first create
+    if(!m_settings->contains(Settings::key_OAuth_ClientSecert))
     {
         m_settings->setValue(Settings::key_OAuth_ClientId,"CLIENTID");
         m_settings->setValue(Settings::key_OAuth_ClientSecert,"CLIENTSECRET");
         m_settings->setValue(Settings::key_OAuth_RedirectUri,"http://localhost:8080");
-        m_settings->setValue(Settings::key_OAuth_RedirectPort,"8080");
         m_settings->setValue(Settings::key_OAuth_Scope,"https://www.googleapis.com/auth/drive.file");
         m_settings->setValue(Settings::key_OAuth_AuthUri,"https://accounts.google.com/o/oauth2/auth");
         m_settings->setValue(Settings::key_OAuth_TokenUri,"https://oauth2.googleapis.com/token");

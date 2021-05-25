@@ -72,8 +72,6 @@ HEADERS += \
         GDriveLib/gdrivefiletask.h \
         GDriveLib/googledriveservice.h \
         QJsonModel/qjsonmodel.h \
-        Secret/oauthglobal.h \
-        Secret/oauthglobal.h \
         accountwidgetacts.h \
         downloaddialog.h \
         filematadatadialog.h \
