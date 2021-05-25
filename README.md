@@ -37,7 +37,7 @@
 ## 使用應用程式
 
 1. 要開發Google OAuth 2 App，您應該[向google申請自己的一組App][Enable the Drive API]，並在[Google Api Console][]下載**Client_secret.json**
-2. [下載]()並執行**GDrive.exe**
+2. [下載](https://github.com/Loukei/GDriveApp/releases)並執行**GDrive.exe**
 
 - 初次使用無法登入Google，因為您還沒有配置設定檔
 - 關閉程式，會看到**GDriveApp_Settings.ini**檔
