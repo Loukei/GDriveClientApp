@@ -1,4 +1,4 @@
-# GDriveApp project(Archived)
+# GDriveClientApp project(Archived)
 
 ###### tags: `C++11` `Qt5` `OAuth 2.0`
 
