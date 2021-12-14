@@ -1,4 +1,6 @@
 #include "networkprogressdialog.h"
+#include <QDebug>
+#include <QtMath>
 
 NetworkProgressDialog::NetworkProgressDialog(const QString &labelText, QWidget *parent)
     : QProgressDialog(labelText,tr("Cancel"),0,100,parent)
@@ -16,8 +18,14 @@ NetworkProgressDialog::~NetworkProgressDialog()
 
 void NetworkProgressDialog::networkProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
-    setMaximum(bytesTotal);
-    setValue(bytesReceived);
+    qDebug() << "Prograss: " << bytesReceived << "," << bytesTotal;
+    if(bytesReceived>0 && (bytesReceived<bytesTotal)){
+//        int prograss = int((double(bytesReceived)/double(bytesTotal))*100);
+        setValue(int((double(bytesReceived)/double(bytesTotal))*100));
+    }
+    else{
+        setValue(0);
+    }
 }
 
 /// when network reply finished, you may want to simply destroy NetworkProgressDialog

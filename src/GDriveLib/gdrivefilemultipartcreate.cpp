@@ -187,8 +187,10 @@ void GDrive::GDriveFileMultipartCreate::onUploadStartReplyError(QNetworkReply::N
     auto httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     if(httpStatus == (500|502|503|504|403)){    //Retry upload
         retry();
+        qDebug("Multipart upload Error:500|502|503|504|403");
     }else if (httpStatus == 404) {              //Restart upload
         retry();
+        qDebug("Multipart upload Error:404");
     }else {                                     //Unslove error
         m_errStr = QString("[Error]Simple Update reply error code %1: %2\n").arg(QString(code),reply->errorString());
         m_replyData = reply->readAll();
